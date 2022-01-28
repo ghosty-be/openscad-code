@@ -1,0 +1,45 @@
+//Custom battery tray - bigclivedotcom
+//https://www.youtube.com/watch?v=dPa_6s1Vmjc&ab_channel=bigclivedotcom
+//
+//You can adjust these variables.
+//
+//number of cups in X direction
+width=4;        
+//number of cups in Y direction
+height=4;       
+//internal depth of cup
+depth=10;
+//internal diameter of cup AA=15 AAA=11
+diameter=15;
+//wall thickness 
+thickness=1.2;
+//cup base thickness
+base=1.2;
+//don't adjust stuff below here
+//
+/* [Hidden] */
+$fn=50;
+columns=width-1;
+rows=height-1;
+wall=thickness*2;
+dia=diameter+thickness;
+cup=depth+base;
+
+difference(){
+  union(){
+    //main body
+    for (x=[0:columns]){
+      for (y=[0:rows]){ 
+        translate([x*dia,y*dia,0])  
+        cylinder(h=cup,d=diameter+wall);
+      }
+    }
+  }
+  //hollow cores
+  for (x=[0:columns]){
+    for (y=[0:rows]){ 
+      translate([x*dia,y*dia,base])  
+      cylinder(h=cup,d=diameter);
+    }
+  }
+}
